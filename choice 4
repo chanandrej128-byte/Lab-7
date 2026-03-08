@@ -1,0 +1,20 @@
+import requests
+import json
+appid=578080
+api_key="C8570378F7D25A89626D8150509D1298"
+url = f"http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?key={api_key}&appid={appid}&count=3&maxlength=300&format=json"
+
+
+response=requests.get(url)
+if response.status_code==200:
+    data=response.json()
+    print(data)
+    new_items=data['appnews']['newsitems']
+    for news in new_items:
+        print(f'title:{news['title']}')
+        print(f'caint:{news['url']}')
+        print(f'author:{news['author']}')
+        print(f'content:{news['contents']}')
+        print('-'*50)
+else:
+    print('error')

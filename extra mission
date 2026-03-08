@@ -1,0 +1,38 @@
+import requests
+from PIL import Image, ImageTk
+import json
+import tkinter as tk
+from io import BytesIO
+
+def image_get():
+    response=requests.get('https://nekos.best/api/v2/hug?amount=5')
+    data=response.json()
+
+    for items in data['results']:
+        img_url=items['url']
+        img_response=requests.get(img_url)
+        image_inf=img_response.content
+        img = Image.open(BytesIO(image_inf))
+        img_tk = ImageTk.PhotoImage(img)
+        label_img.config(image=img_tk)
+        label_img.image = img_tk
+
+
+window=tk.Tk()
+window.geometry("500x500")
+window.title('image_maker')
+
+
+
+label_1=tk.Label(window,font='Arial 12 bold',fg='black',text='you can make a picture',bg='white')
+label_1.place(relx=0.4,rely=0.1)
+
+button=tk.Button(window,text='pink to make a picture',fg='red',bg='white',command=image_get)
+button.place(relx=0.3,rely=0.7)
+
+label_img = tk.Label(window, bg='white')
+label_img.place(relx=0.3, rely=0.4)
+
+
+
+window.mainloop()

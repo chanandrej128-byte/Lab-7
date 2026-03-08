@@ -1,0 +1,15 @@
+import requests
+import json
+api_key="f7c1f5c6c285949a7d5a23c5da25c163"
+city="Nantong"
+url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"  #
+response = requests.get(url)
+if response.status_code == 200:
+    data=response.json()
+    weather_descripitin=data["weather"][0]["description"]
+    temperature=data['main']['temp']
+
+    print(f"weather descripitin in {city}is {weather_descripitin}")
+    print(f"temperature in {city} is {temperature}")
+else:
+    print(f'faliure,code{response.status_code}')
